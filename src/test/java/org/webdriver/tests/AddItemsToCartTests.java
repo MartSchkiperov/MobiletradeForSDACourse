@@ -50,7 +50,7 @@ public class AddItemsToCartTests {
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
         String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
-        Assertions.assertEquals(Integer.parseInt(quantity), 1);
+        Assertions.assertEquals(1, Integer.parseInt(quantity));
         emptyCart();
     }
 
@@ -72,7 +72,7 @@ public class AddItemsToCartTests {
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
         String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
-        Assertions.assertEquals(Integer.parseInt(quantity), 1);
+        Assertions.assertEquals(1, Integer.parseInt(quantity));
         emptyCart();
     }
 
@@ -86,7 +86,7 @@ public class AddItemsToCartTests {
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
         String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
-        Assertions.assertEquals(Integer.parseInt(quantity), 1);
+        Assertions.assertEquals(1, Integer.parseInt(quantity));
         emptyCart();
     }
 
@@ -185,11 +185,11 @@ public class AddItemsToCartTests {
 
     @Test
     public void searchItem() {
-        WebElement seachField = driver.findElement(By.id("filter_name"));
-        seachField.sendKeys(searchItem);
+        WebElement searchField = driver.findElement(By.id("filter_name"));
+        searchField.sendKeys(searchItem);
         driver.findElement(By.className("button-search")).click();
         WebElement searchResult = driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/div[3]/div[1]/a"));
-        Assertions.assertEquals(searchResult.getText(), searchItem);
+        Assertions.assertEquals(searchItem, searchResult.getText());
     }
 
     @Test
