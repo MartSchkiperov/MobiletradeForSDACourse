@@ -31,7 +31,7 @@ searchItemAndAddToCart                                 - search item and open in
 public class AddItemsToCartTests {
 
     private WebDriver driver;
-    private final String searchItem = "Apple iPhone 14 Pro 1TB";
+    private final String searchItem = "Apple iPhone 14 128GB";
 
     @Before
     public void setup() {
@@ -193,7 +193,6 @@ public class AddItemsToCartTests {
 
     @Test
     public void searchItem() {
-        String searchItem = "Apple iPhone 14 Pro 1TB";
         WebElement seachField = driver.findElement(By.id("filter_name"));
         seachField.sendKeys(searchItem);
         driver.findElement(By.className("button-search")).click();
@@ -214,9 +213,9 @@ public class AddItemsToCartTests {
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
-        String smartphoneInCart = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/a")).getAttribute("value");
-System.out.println("smartphoneInCart " + smartphoneInCart);
-        Assertions.assertEquals(searchItem, smartphoneInCart);
+        String smartphoneNameInCart = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/a")).getText();
+        if (smartphoneNameInCart.length() < searchItem.length()) smartphoneNameInCart = "";
+        Assertions.assertEquals(searchItem, smartphoneNameInCart.substring(0, searchItem.length()));
         emptyCart();
     }
 
