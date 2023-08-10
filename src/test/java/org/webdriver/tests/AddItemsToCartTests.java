@@ -161,18 +161,9 @@ public class AddItemsToCartTests {
     @Test
     public void firstItemChangeColour() throws InterruptedException {
         driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[1]/div[2]/div/a")).click();
-        {
-            WebElement element = driver.findElement(By.cssSelector(".tk-category-47:nth-child(2) > a"));
-            Actions builder = new Actions(driver);
-            builder.moveToElement(element).perform();
-        }
         driver.findElement(By.id("matrix-select-korpuse-varv")).click();
-        {
-            WebElement dropdown = driver.findElement(By.id("matrix-select-korpuse-varv"));
-            dropdown.findElement(By.xpath("//*[@id=\"matrix-select-korpuse-varv\"]/option[3]")).click();
-        }
         driver.findElement(By.cssSelector("option:nth-child(3)")).click();
-        String menuColourString = driver.findElement(By.cssSelector("option:nth-child(3)")).getText();
+        String dropdownColourString = driver.findElement(By.cssSelector("option:nth-child(3)")).getText();
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
@@ -188,7 +179,7 @@ public class AddItemsToCartTests {
         } else {
             colourInCart = extractColour(String.valueOf(optionalColourString.get()));
         }
-        Assertions.assertEquals(menuColourString, colourInCart);
+        Assertions.assertEquals(dropdownColourString, colourInCart);
         emptyCart();
     }
 
