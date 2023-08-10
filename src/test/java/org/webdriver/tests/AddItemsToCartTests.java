@@ -48,7 +48,7 @@ public class AddItemsToCartTests {
         driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[1]/div[2]/div/a")).click();
         driver.findElement(By.id("button-cart")).click();
 
-        Thread.sleep(5000); // to avoid glitches with 2 chat elements
+        Thread.sleep(2000); // to avoid glitches with 2 chat elements
         String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
         Assertions.assertEquals(Integer.parseInt(quantity), 1);
         emptyCart();
