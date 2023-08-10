@@ -169,7 +169,7 @@ public class AddItemsToCartTests {
         driver.findElement(By.id("matrix-select-korpuse-varv")).click();
         {
             WebElement dropdown = driver.findElement(By.id("matrix-select-korpuse-varv"));
-            dropdown.findElement(By.xpath("//option[. = 'Red']")).click();
+            dropdown.findElement(By.xpath("//*[@id=\"matrix-select-korpuse-varv\"]/option[3]")).click();
         }
         driver.findElement(By.cssSelector("option:nth-child(3)")).click();
         String menuColourString = driver.findElement(By.cssSelector("option:nth-child(3)")).getText();
@@ -208,14 +208,12 @@ public class AddItemsToCartTests {
         driver.findElement(By.className("button-search")).click();
         WebElement searchResult = driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/div[3]/div[1]/a"));
         Assertions.assertEquals(searchResult.getText(), searchItem);
-
-        Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/div[2]/div/a/img")).click();
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
         String smartphoneNameInCart = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/a")).getText();
-        if (smartphoneNameInCart.length() < searchItem.length()) smartphoneNameInCart = "";
+        if (smartphoneNameInCart == null || smartphoneNameInCart.length() < searchItem.length()) smartphoneNameInCart = "";
         Assertions.assertEquals(searchItem, smartphoneNameInCart.substring(0, searchItem.length()));
         emptyCart();
     }
