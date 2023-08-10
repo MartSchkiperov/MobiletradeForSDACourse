@@ -172,22 +172,23 @@ public class AddItemsToCartTests {
             dropdown.findElement(By.xpath("//option[. = 'Red']")).click();
         }
         driver.findElement(By.cssSelector("option:nth-child(3)")).click();
+        String menuColourString = driver.findElement(By.cssSelector("option:nth-child(3)")).getText();
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
-        Optional optionalColourString = Optional.empty();
+        Optional<Object> optionalColourString = Optional.empty();
         try {
             optionalColourString = Optional.ofNullable(driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/div")).getText());
         } catch (InvalidSelectorException e) {
             System.out.println(e);
         }
-        String colour = "";
+        String colourInCart = "";
         if (optionalColourString.isEmpty()) {
             System.out.println("PROBLEM: Error getting properties from cart");
         } else {
-            colour = extractColour(String.valueOf(optionalColourString.get()));
+            colourInCart = extractColour(String.valueOf(optionalColourString.get()));
         }
-        Assertions.assertEquals(colour, "Red");
+        Assertions.assertEquals(menuColourString, colourInCart);
         emptyCart();
     }
 
@@ -259,7 +260,7 @@ public class AddItemsToCartTests {
         List<String> lines = new ArrayList<>();
         colourString.lines().forEach(lines::add);
         String colourLine = lines.get(lines.size() - 1);
-        return lines.get(lines.size() - 1).length() > 1 ? colourLine.substring(15) : "";
+        return lines.get(lines.size() - 1).length() > 14 ? colourLine.substring(15) : "";
     }
 
 }
