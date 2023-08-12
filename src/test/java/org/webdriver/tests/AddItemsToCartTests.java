@@ -7,26 +7,25 @@ import org.junit.After;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 
 import java.util.*;
 
 /*
-Tests description
+Testing main area: add item to cart, tests description
 =================
-firstItemSimpleAddToCart                               - default adding (1) item to cart
-firstItemWriteQuantity1AddToCart                       - in first item page write quantity 1
-firstItemClickMinusQuantityCheck                       - clicking quantity "-", with quantity 0 add to cart must give alert
-firstItemClickPlusMinusCartQuantityCheck               - clicking quantity "+", clicking quantity "-", quantity check in cart
-firstItemWriteQuantityStockPlus1AddToCartMustGiveAlert - in first item page write stock quantity + 1 - add to cart must give alert
-firstItemWriteQuantity0AddToCartMustGiveAlert          - in first item page write quantity 0 - add to cart must give alert
-firstItemWriteNegativeQuantityAddToCartMustGiveAlert   - in first item page write quantity -1 - add to cart must give alert
-firstItemWriteLetterQuantityAddToCartMustGiveAlert     - in first item page write quantity "a" - add to cart must give alert
-firstItemWriteEmptyQuantityAddToCartMustGiveAlert      - in first item page write quantity "" - add to cart must give alert
-firstItemWriteSpaceQuantityAddToCartMustGiveAlert      - in first item page write quantity " " - add to cart must give alert
-firstItemChangeColour                                  - in first item page change colour and check colour in cart
-searchItem                                             - search item and open in item page
-searchItemAndAddToCart                                 - search item and open in item page and add to cart
+1. firstItemSimpleAddToCart                               - default adding (1) item to cart
+2. firstItemWriteQuantity1AddToCart                       - in first item page write quantity 1
+3. firstItemClickMinusQuantityCheck                       - clicking quantity "-", with quantity 0 add to cart must give alert
+4. firstItemClickPlusMinusCartQuantityCheck               - clicking quantity "+", clicking quantity "-", quantity check in cart
+5. firstItemWriteQuantityStockPlus1AddToCartMustGiveAlert - in first item page write stock quantity + 1 - add to cart must give alert
+6. firstItemWriteQuantity0AddToCartMustGiveAlert          - in first item page write quantity 0 - add to cart must give alert
+7. firstItemWriteNegativeQuantityAddToCartMustGiveAlert   - in first item page write quantity -1 - add to cart must give alert
+8. firstItemWriteLetterQuantityAddToCartMustGiveAlert     - in first item page write quantity "a" - add to cart must give alert
+9. firstItemWriteEmptyQuantityAddToCartMustGiveAlert      - in first item page write quantity "" - add to cart must give alert
+10. firstItemWriteSpaceQuantityAddToCartMustGiveAlert     - in first item page write quantity " " - add to cart must give alert
+11. firstItemChangeColour                                 - in first item page change colour and check colour in cart
+12. searchItem                                            - search item and open in item page
+13. searchItemAndAddToCart                                - search item and open in item page and add to cart
  */
 public class AddItemsToCartTests {
 
@@ -55,12 +54,17 @@ public class AddItemsToCartTests {
     }
 
     @Test
-    public void firstItemClickMinusQuantityCheck() {
+    public void firstItemWriteQuantity1AddToCart() throws InterruptedException {
         driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[1]/div[2]/div/a")).click();
-        driver.findElement(By.xpath("//*[@id=\"multiAddToCartForm\"]/div/a[1]")).click();
+        WebElement quantityField = driver.findElement(By.xpath("//*[@id=\"matrix-select-qty\"]"));
+        quantityField.clear();
+        quantityField.sendKeys("1");
         driver.findElement(By.id("button-cart")).click();
-        Assertions.assertTrue(isAlertPresent());
-        driver.switchTo().alert().accept();
+
+        Thread.sleep(2000); // to avoid glitches with 2 chat elements
+        String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
+        Assertions.assertEquals(1, Integer.parseInt(quantity));
+        emptyCart();
     }
 
     @Test
@@ -77,17 +81,12 @@ public class AddItemsToCartTests {
     }
 
     @Test
-    public void firstItemWriteQuantity1AddToCart() throws InterruptedException {
+    public void firstItemClickMinusQuantityCheck() {
         driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[1]/div[2]/div/a")).click();
-        WebElement quantityField = driver.findElement(By.xpath("//*[@id=\"matrix-select-qty\"]"));
-        quantityField.clear();
-        quantityField.sendKeys("1");
+        driver.findElement(By.xpath("//*[@id=\"multiAddToCartForm\"]/div/a[1]")).click();
         driver.findElement(By.id("button-cart")).click();
-
-        Thread.sleep(2000); // to avoid glitches with 2 chat elements
-        String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
-        Assertions.assertEquals(1, Integer.parseInt(quantity));
-        emptyCart();
+        Assertions.assertTrue(isAlertPresent());
+        driver.switchTo().alert().accept();
     }
 
     @Test
