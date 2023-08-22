@@ -13,19 +13,20 @@ import java.util.*;
 /*
 Testing main area: add item to cart, tests description
 =================
-1. firstItemSimpleAddToCart                               - default adding (1) item to cart
-2. firstItemWriteQuantity1AddToCart                       - in first item page write quantity 1
-3. firstItemClickMinusQuantityCheck                       - clicking quantity "-", with quantity 0 add to cart must give alert
-4. firstItemClickPlusMinusCartQuantityCheck               - clicking quantity "+", clicking quantity "-", quantity check in cart
-5. firstItemWriteQuantityStockPlus1AddToCartMustGiveAlert - in first item page write stock quantity + 1 - add to cart must give alert
-6. firstItemWriteQuantity0AddToCartMustGiveAlert          - in first item page write quantity 0 - add to cart must give alert
-7. firstItemWriteNegativeQuantityAddToCartMustGiveAlert   - in first item page write quantity -1 - add to cart must give alert
-8. firstItemWriteLetterQuantityAddToCartMustGiveAlert     - in first item page write quantity "a" - add to cart must give alert
-9. firstItemWriteEmptyQuantityAddToCartMustGiveAlert      - in first item page write quantity "" - add to cart must give alert
-10. firstItemWriteSpaceQuantityAddToCartMustGiveAlert     - in first item page write quantity " " - add to cart must give alert
-11. firstItemChangeColour                                 - in first item page change colour and check colour in cart
-12. searchItem                                            - search item and open in item page
-13. searchItemAndAddToCart                                - search item and open in item page and add to cart
+1. isLandingPageLoad                                      - landing page works
+2. firstItemSimpleAddToCart                               - default adding (1) item to cart
+3. firstItemWriteQuantity1AddToCart                       - in first item page write quantity 1
+4. firstItemClickMinusQuantityCheck                       - clicking quantity "-", with quantity 0 add to cart must give alert
+5. firstItemClickPlusMinusCartQuantityCheck               - clicking quantity "+", clicking quantity "-", quantity check in cart
+6. firstItemWriteQuantityStockPlus1AddToCartMustGiveAlert - in first item page write stock quantity + 1 - add to cart must give alert
+7. firstItemWriteQuantity0AddToCartMustGiveAlert          - in first item page write quantity 0 - add to cart must give alert
+8. firstItemWriteNegativeQuantityAddToCartMustGiveAlert   - in first item page write quantity -1 - add to cart must give alert
+9. firstItemWriteLetterQuantityAddToCartMustGiveAlert     - in first item page write quantity "a" - add to cart must give alert
+10. firstItemWriteEmptyQuantityAddToCartMustGiveAlert     - in first item page write quantity "" - add to cart must give alert
+11. firstItemWriteSpaceQuantityAddToCartMustGiveAlert     - in first item page write quantity " " - add to cart must give alert
+12. firstItemChangeColour                                 - in first item page change colour and check colour in cart
+13. searchItem                                            - search item and open in item page
+14. searchItemAndAddToCart                                - search item and open in item page and add to cart
  */
 public class AddItemsToCartTests {
 
@@ -41,6 +42,11 @@ public class AddItemsToCartTests {
         driver.findElement(By.xpath("//*[@id=\"sr-cookie-policy\"]/div/div/div/button")).click();
     }
 
+    @Test
+    public void isLandingPageLoad() {
+        Assertions.assertEquals
+                ("Mobile Trade - aku ja ekraani vahetus ootetööna Tallinna vanalinnas", driver.getTitle());
+    }
 
     @Test
     public void firstItemSimpleAddToCart() throws InterruptedException {
@@ -48,7 +54,8 @@ public class AddItemsToCartTests {
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
-        String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
+        String quantity = driver.findElement
+                (By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
         Assertions.assertEquals(1, Integer.parseInt(quantity));
         emptyCart();
     }
@@ -62,7 +69,8 @@ public class AddItemsToCartTests {
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
-        String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
+        String quantity = driver.findElement
+                (By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
         Assertions.assertEquals(1, Integer.parseInt(quantity));
         emptyCart();
     }
@@ -75,7 +83,8 @@ public class AddItemsToCartTests {
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
-        String quantity = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
+        String quantity = driver.findElement
+                (By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[3]/input")).getAttribute("value");
         Assertions.assertEquals(1, Integer.parseInt(quantity));
         emptyCart();
     }
@@ -168,7 +177,8 @@ public class AddItemsToCartTests {
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
         Optional<Object> optionalColourString = Optional.empty();
         try {
-            optionalColourString = Optional.ofNullable(driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/div")).getText());
+            optionalColourString = Optional.ofNullable
+                    (driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/div")).getText());
         } catch (InvalidSelectorException e) {
             System.out.println(e);
         }
@@ -202,8 +212,10 @@ public class AddItemsToCartTests {
         driver.findElement(By.id("button-cart")).click();
 
         Thread.sleep(2000); // to avoid glitches with 2 chat elements
-        String smartphoneNameInCart = driver.findElement(By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/a")).getText();
-        if (smartphoneNameInCart == null || smartphoneNameInCart.length() < searchItem.length()) smartphoneNameInCart = "";
+        String smartphoneNameInCart = driver.findElement
+                (By.xpath("//*[@id=\"cartForm\"]/div[1]/table/tbody/tr/td[2]/a")).getText();
+        if (smartphoneNameInCart == null || smartphoneNameInCart.length() < searchItem.length())
+            smartphoneNameInCart = "";
         Assertions.assertEquals(searchItem, smartphoneNameInCart.substring(0, searchItem.length()));
         emptyCart();
     }
